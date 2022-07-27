@@ -1,12 +1,22 @@
-<div *ngFor="let row of matrix">
-  <span *ngFor="let cell of row">
-    <button>
+<div *ngFor="let row of matrix; let i = index">
+  <span *ngFor="let cell of row; let j = index">
+    <button *ngIf="!cell.open" (click)="onClick(i, j)">
+      &nbsp;
+      <!--
       <span *ngIf="cell.mine"> * </span>
-      <span *ngIf="!cell.mine"> . </span>
-
-      <span *ngIf="cell.open"> {{ cell.neighbours }} </span>
-
       
+      
+      <span *ngIf="cell.open"> {{ cell.neighbours }} </span>
+      -->
+    </button>
+
+    <button *ngIf="cell.open">
+      <span *ngIf="cell.mine"> * </span>
+      <span *ngIf="!cell.mine && cell.neighbours == 0"> E </span>
+      <span *ngIf="!cell.mine && cell.neighbours > 0">
+        {{ cell.neighbours }}
+      </span>
+      &nbsp;
     </button>
   </span>
 </div>

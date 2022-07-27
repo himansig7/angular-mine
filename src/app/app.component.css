@@ -1,3 +1,11 @@
 p {
   font-family: Lato;
 }
+
+button {
+  display: block;
+  min-height: 50px;
+  min-width: 100px;
+  height: 100px;
+  width: 100px;
+}

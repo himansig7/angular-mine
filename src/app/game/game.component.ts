@@ -32,13 +32,38 @@ export class GameComponent implements OnInit {
 
   matrix: any = [];
 
-  rows = 5;
-  cols = 5;
+  rows = 10;
+  cols = 8;
+  cells = this.rows * this.cols;
+  planted = 0;
+  bombs = Math.floor(this.cells / 2);
 
   constructor() {
     this.createCellMatrix();
+    this.putMines();
     this.calcNeighbours();
   }
+
+  putMines() {
+    const chance = this.bombs / this.cells;
+
+    console.log('Chance', this.bombs, chance + 0.5);
+
+    for (let i = 0; i < this.rows && this.planted < this.bombs; i++) {
+      for (let j = 0; j < this.cols && this.planted < this.bombs; j++) {
+        let putAMine: boolean = Math.random() < chance + 0.001;
+
+        if (putAMine && this.planted < this.bombs) {
+          let cell: Cell = this.getCell(i, j);
+          if (!cell.mine) {
+            cell.mine = true;
+            this.planted++;
+          }
+        }
+      }
+    }
+  }
+
   createCellMatrix() {
     for (let i = 0; i < this.rows; i++) {
       let row = [];
@@ -49,7 +74,7 @@ export class GameComponent implements OnInit {
         cell.y = j;
 
         if (j == 4) {
-          cell.mine = true;
+          // cell.mine = true;
         }
 
         row.push(cell);
@@ -99,16 +124,33 @@ export class GameComponent implements OnInit {
     return this.matrix[i][j];
   }
 
+  onClick(i: number, j: number) {
+    let cell: Cell = this.getCell(i, j);
+    
+    if (cell.mine) {
+      alert('game-over');
+      return;
+    }
+
+    this.tryOpen(i, j)
+
+
+
+  }
+
   tryOpen(i, j) {
     if (i < 0 || i >= this.rows || j < 0 || j >= this.cols) {
       return 0;
     }
     let cell: Cell = this.getCell(i, j);
-    if (cell.mine) {
-      alert('game-over');
-      return;
-    }
+    
     cell.open = true;
+
+    if (cell.neighbours == 0) {
+      for (let d of directions) {
+        this.tryOpen(i + d.x, j + d.y);
+      }
+    }
   }
 
   ngOnInit() {}
