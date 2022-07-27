@@ -1,0 +1,12 @@
+<div *ngFor="let row of matrix">
+  <span *ngFor="let cell of row">
+    <button>
+      <span *ngIf="cell.mine"> * </span>
+      <span *ngIf="!cell.mine"> . </span>
+
+      <span *ngIf="cell.open"> {{ cell.neighbours }} </span>
+
+      
+    </button>
+  </span>
+</div>
