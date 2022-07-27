@@ -120,6 +120,10 @@ export class GameComponent implements OnInit {
     return 0;
   }
 
+  onRightClick($event, i, j) {
+    let cell: Cell = this.getCell(i, j);
+    cell.flag = !cell.flag;
+  }
   getCell(i, j) {
     return this.matrix[i][j];
   }
@@ -137,9 +141,10 @@ export class GameComponent implements OnInit {
 
   tryOpen(i, j) {
     if (i < 0 || i >= this.rows || j < 0 || j >= this.cols) {
-      return 0;
+      return;
     }
     let cell: Cell = this.getCell(i, j);
+    if (cell.open) return;
 
     cell.open = true;
 

@@ -1,7 +1,13 @@
 <div *ngFor="let row of matrix; let i = index">
   <span *ngFor="let cell of row; let j = index">
-    <button *ngIf="!cell.open" (click)="onClick(i, j)">
+    <button
+      *ngIf="!cell.open"
+      (click)="onClick(i, j)"
+      (contextmenu)="onRightClick($event, i, j)"
+    >
       &nbsp;
+      <span *ngIf="cell.flag"> FLAG </span>
+
       <!--
       <span *ngIf="cell.mine"> * </span>
       
