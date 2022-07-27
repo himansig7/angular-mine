@@ -13,10 +13,27 @@
       
       
       <span *ngIf="cell.open"> {{ cell.neighbours }} </span>
+
+
+
+
+
+
+
+
+
+
       -->
+
+      <span *ngIf="cell.mine"> * </span>
+      <span *ngIf="!cell.mine && cell.neighbours == 0"> &nbsp; </span>
+      <span *ngIf="!cell.mine && cell.neighbours > 0">
+        {{ cell.neighbours }}
+      </span>
     </button>
 
     <button *ngIf="cell.open">
+      #
       <span *ngIf="cell.mine"> * </span>
       <span *ngIf="!cell.mine && cell.neighbours == 0"> E </span>
       <span *ngIf="!cell.mine && cell.neighbours > 0">
