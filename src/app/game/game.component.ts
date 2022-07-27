@@ -36,7 +36,7 @@ export class GameComponent implements OnInit {
   cols = 8;
   cells = this.rows * this.cols;
   planted = 0;
-  bombs = Math.floor(this.cells / 2);
+  bombs = Math.floor(this.cells / 5);
 
   constructor() {
     this.createCellMatrix();
@@ -126,16 +126,13 @@ export class GameComponent implements OnInit {
 
   onClick(i: number, j: number) {
     let cell: Cell = this.getCell(i, j);
-    
+
     if (cell.mine) {
       alert('game-over');
       return;
     }
 
-    this.tryOpen(i, j)
-
-
-
+    this.tryOpen(i, j);
   }
 
   tryOpen(i, j) {
@@ -143,7 +140,7 @@ export class GameComponent implements OnInit {
       return 0;
     }
     let cell: Cell = this.getCell(i, j);
-    
+
     cell.open = true;
 
     if (cell.neighbours == 0) {
